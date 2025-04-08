@@ -1,0 +1,184 @@
+import streamlit as st
+from openai import OpenAI
+
+client = OpenAI(api_key = "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")
+    
+# Define the stages of the V-Model
+stages = [
+    "Requirements Analysis",
+    "System Design",
+    "Architecture Design",
+    "Module Design",
+    "Coding",
+    "Unit Testing",
+    "Integration Testing",
+    "System Testing",
+    "Acceptance Testing"
+]
+
+# Function to display the V-Model in a V-shape
+def display_v_model():
+    st.markdown("""
+    <style>
+    .v-model {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .stage {
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 200px;
+        text-align: center;
+    }
+    .stage:hover {
+        background-color: #f0f0f0;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<div class='v-model'>", unsafe_allow_html=True)
+    
+    # Display stages in a V-shape
+    for i, stage in enumerate(stages):
+        if i < len(stages) // 2:  # Left side of the V
+            st.markdown(f"<div class='stage' onclick='window.location.href=\"?stage={stage}\"'>{stage}</div>", unsafe_allow_html=True)
+        elif i == len(stages) // 2:  # Middle of the V
+            st.markdown(f"<div class='stage' onclick='window.location.href=\"?stage={stage}\"'>{stage}</div>", unsafe_allow_html=True)
+        else:  # Right side of the V
+            st.markdown(f"<div class='stage' onclick='window.location.href=\"?stage={stage}\"'>{stage}</div>", unsafe_allow_html=True)
+    
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# Function to interact with OpenAI API and generate code
+def generate_code_with_openai(requirements):
+    # Set your OpenAI API key
+    client = OpenAI(api_key = "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")
+    #openai.api_key = "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" 
+    #st.secrets["openai_api_key"]  # Store your API key in Streamlit secrets
+    
+    # Define the prompt for OpenAI
+    #prompt = f"Generate Python code based on the following requirements:\n{requirements}"
+    prompt = f"Generate code based on the following requirements:\n{requirements}"
+    
+    # Call OpenAI API
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+                {"role": "system", "content": "You are a helpful assistant that generates code in any programming language."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=1000,  # Adjust based on the expected length of the code
+            temperature=0.7,  # Controls creativity (0.0 = deterministic, 1.0 = creative)
+        )
+    
+    # Extract and return the generated code
+    return response.choices[0].message.content.strip() #response.choices[0].text.strip()
+
+# Function to display the Coding page
+def coding_page():
+    st.title("Coding")
+    st.subheader("Generate Code from Software Requirements")
+    
+    # Input for requirements
+    requirements = st.text_area("Enter your requirements here:")
+    
+    # Button to generate code
+    if st.button("Generate Code"):
+        if requirements:
+            with st.spinner("Generating code..."):
+                try:
+                    # Call OpenAI API to generate code
+                    generated_code = generate_code_with_openai(requirements)
+                    st.success("Code generated successfully!")
+                    st.code(generated_code, language="python")
+                    st.session_state.generated_code = generated_code
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")
+        else:
+            st.error("Please enter requirements to generate code.")
+    
+    if "generated_code" in st.session_state:
+        st.write("### Unit Testing")
+        if st.button("Generate Unit Test Case"):
+            
+            #prompt=f"Generate a Python unit test case for the following code:\n{st.session_state.generated_code}"
+            
+            # Generate unit test case using GPT-4
+            response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[                
+                    {"role": "system", "content": "You are a helpful assistant that generates test code in any programming language."},
+                    {"role": "user", "content": st.session_state.generated_code}
+                ],
+                max_tokens=1000,  # Adjust based on the expected length of the code
+                temperature=0.7, 
+            )
+            unit_test_case = response.choices[0].message.content.strip() 
+            st.code(unit_test_case, language="python")
+
+            # Save unit test case for execution
+            st.session_state.unit_test_case = unit_test_case
+
+        if "unit_test_case" in st.session_state:
+            if st.button("Run Unit Test Case"):
+                # Execute the unit test case (this is a placeholder for actual execution)
+                st.write("Running unit test case...")
+                st.write("Test results will be displayed here.")
+                # You can integrate a testing framework like pytest for actual execution
+
+        
+
+# Function to display the Unit Testing page
+def unit_testing_page():
+    st.title("Unit Testing")
+    st.subheader("Generate Unit Testing Template")
+    
+    # Button to generate unit test template
+    if st.button("Generate Unit Test Template"):
+        st.success("Unit testing template generated successfully!")
+        st.code("""
+        # Sample unit test template
+        import unittest
+
+        class TestAddFunction(unittest.TestCase):
+            def test_add(self):
+                self.assertEqual(add(2, 3), 5)
+                self.assertEqual(add(-1, 1), 0)
+                self.assertEqual(add(0, 0), 0)
+
+        if __name__ == '__main__':
+            unittest.main()
+        """, language="python")
+
+# Function to display the dedicated page for each stage
+def display_stage_page(stage):
+    if stage == "Coding":
+        coding_page()
+    elif stage == "Unit Testing":
+        unit_testing_page()
+    else:
+        st.title(stage)
+        st.write(f"This is the dedicated page for {stage}.")
+
+# Main function to run the Streamlit app
+def main():
+    st.set_page_config(page_title="Software Engineering Copilot", layout="wide")
+    st.title("Software Engineering Copilot")
+    
+    # Add a sidebar menu for navigation
+    st.sidebar.title("Navigation")
+    selected_stage = st.sidebar.radio("Go to", stages)
+    
+    st.sidebar.write("\n \n kinnovia.com all rights reserved")
+    # Display the V-Model
+    #display_v_model()
+    
+    # Display the selected stage page
+    display_stage_page(selected_stage)
+
+if __name__ == "__main__":
+    main()

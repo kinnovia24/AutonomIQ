@@ -1,0 +1,13 @@
+setup.py
+Requirements_generation/__init__.py
+Requirements_generation/aspice_app.py
+Requirements_generation/aspice_app_.py
+Requirements_generation/misra_checker.py
+Requirements_generation/srs_app.py
+Requirements_generation/system_design.py
+requirements_generation.egg-info/PKG-INFO
+requirements_generation.egg-info/SOURCES.txt
+requirements_generation.egg-info/dependency_links.txt
+requirements_generation.egg-info/entry_points.txt
+requirements_generation.egg-info/requires.txt
+requirements_generation.egg-info/top_level.txt

@@ -1,0 +1,6 @@
+# .streamlit/config.toml
+[theme]
+primaryColor = "#000000"   # Primary accent color (e.g., buttons)
+backgroundColor = "#ffffff"  # Light blue background (main area)
+secondaryBackgroundColor = "#cccccc"  # Slightly darker blue (sidebar, etc.)
+textColor = "#000000"       # Text color (black for contrast)

@@ -1,0 +1,15 @@
+streamlit
+openai
+pandas
+xlsxwriter
+streamlit-image-coordinates
+sys
+IO
+subprocess
+streamlit-image-zoom
+Pillow
+json
+streamlit-drawable-canvas
+matplotlib
+networkx
+graphviz

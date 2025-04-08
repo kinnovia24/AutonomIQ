@@ -1,0 +1,3 @@
+[console_scripts]
+run-requirements-app = main:main
+
