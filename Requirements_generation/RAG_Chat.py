@@ -170,7 +170,7 @@ def show_rag_chat():
     # Load API Keys
     # os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
     # embeddings=HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-    os.environ['OPENAI_API_KEY'] = os.getenv("OPENAI_API_KEY")
+    os.environ['OPENAI_API_KEY'] = "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"#os.getenv("OPENAI_API_KEY")
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 
     # Streamlit UI
@@ -179,7 +179,7 @@ def show_rag_chat():
     st.write("Upload specification document ask AI about content")
 
     # Retrieve API Key Securely
-    api_key = "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"
+    api_key = "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"
     # api_key = "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"
     if not api_key:
         st.error("Missing API Key. Please set GROQ_API_KEY in your .env file.")

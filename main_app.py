@@ -67,7 +67,7 @@ def main_app():
     #st.write("---")
     
     # Sidebar navigation for V-cycle steps
-    st.sidebar.title("Development activities")
+    st.sidebar.title("AutonomIQ")
     selected_step = st.sidebar.radio("Go to", v_cycle_steps)
     main_application(selected_step)
 

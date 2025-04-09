@@ -8,7 +8,7 @@ from datetime import datetime
 from io import BytesIO
 
 # Initialize OpenAI (replace with your API key)
-openai.api_key = "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"
+openai.api_key = "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"
 def project_ai():
 
     # Fixed domain-specific epic templates

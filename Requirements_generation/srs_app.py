@@ -6,8 +6,7 @@ import pandas as pd
 from io import BytesIO
 
 # Set your OpenAI API key here
-openai.api_key = "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"
-
+openai.api_key = "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"
 def generate_srs(software_description):
     """
     Generates a DOORS-style SRS document using OpenAI GPT-4.

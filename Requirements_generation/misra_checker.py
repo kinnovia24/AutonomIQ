@@ -2,11 +2,10 @@ import streamlit as st
 import openai
 
 # OpenAI API Key Input
-openai.api_key = "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"
-
+openai.api_key = "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"
 # Function to check MISRA-C compliance using OpenAI
 def check_misra_compliance(code):
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-4",  # Use GPT-4 or GPT-3.5
         messages=[
             {"role": "system", "content": "You are a helpful assistant that checks C code for compliance with MISRA-C rules. Analyze the code line by line and provide feedback on any violations."},
